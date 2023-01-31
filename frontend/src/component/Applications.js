@@ -155,6 +155,7 @@ const ApplicationTile = (props) => {
           application.status === "finished" ? (
             <Grid item>Joined On: {joinedOn.toLocaleDateString()}</Grid>
           ) : null}
+          <Grid item>Comment: {application.comment}</Grid>
         </Grid>
         <Grid item container direction="column" xs={3}>
           <Grid item xs>

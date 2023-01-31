@@ -688,6 +688,8 @@ router.put("/applications/:id", jwtAuth, (req, res) => {
   const user = req.user;
   const id = req.params.id;
   const status = req.body.status;
+  const comment = req.body.comment;
+  console.log(comment)
 
   // "applied", // when a applicant is applied
   // "shortlisted", // when a applicant is shortlisted
@@ -735,6 +737,7 @@ router.put("/applications/:id", jwtAuth, (req, res) => {
               if (activeApplicationCount < job.maxPositions) {
                 // accepted
                 application.status = status;
+                application.comment = comment;
                 application.dateOfJoining = req.body.dateOfJoining;
                 application
                   .save()
@@ -758,6 +761,7 @@ router.put("/applications/:id", jwtAuth, (req, res) => {
                       {
                         $set: {
                           status: "cancelled",
+                          comment: comment
                         },
                       },
                       { multi: true }
@@ -819,6 +823,7 @@ router.put("/applications/:id", jwtAuth, (req, res) => {
         {
           $set: {
             status: status,
+            comment: comment,
           },
         }
       )
@@ -855,6 +860,7 @@ router.put("/applications/:id", jwtAuth, (req, res) => {
         {
           $set: {
             status: status,
+            comment: comment
           },
         }
       )

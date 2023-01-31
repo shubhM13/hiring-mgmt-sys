@@ -359,6 +359,13 @@ const ApplicationTile = (props) => {
     finished: "#4EA5D9",
   };
 
+  // Handle comments
+  const [text, setText] = useState('');
+
+  const handleChange = event => {
+    setText(event.target.value);
+  };
+
   const getResume = () => {
     if (
       application.jobApplicant.resume &&
@@ -392,11 +399,12 @@ const ApplicationTile = (props) => {
     }
   };
 
-  const updateStatus = (status) => {
+  const updateStatus = (status, text) => {
     const address = `${apiList.applications}/${application._id}`;
     const statusData = {
       status: status,
       dateOfJoining: new Date().toISOString(),
+      comment: text
     };
     axios
       .put(address, statusData, {
@@ -432,7 +440,7 @@ const ApplicationTile = (props) => {
               background: colorSet["shortlisted"],
               color: "#ffffff",
             }}
-            onClick={() => updateStatus("shortlisted")}
+            onClick={() => updateStatus("shortlisted", text)}
           >
             Shortlist
           </Button>
@@ -444,7 +452,7 @@ const ApplicationTile = (props) => {
               background: colorSet["rejected"],
               color: "#ffffff",
             }}
-            onClick={() => updateStatus("rejected")}
+            onClick={() => updateStatus("rejected", text)}
           >
             Reject
           </Button>
@@ -460,7 +468,7 @@ const ApplicationTile = (props) => {
               background: colorSet["accepted"],
               color: "#ffffff",
             }}
-            onClick={() => updateStatus("accepted")}
+            onClick={() => updateStatus("accepted", text)}
           >
             Accept
           </Button>
@@ -472,7 +480,7 @@ const ApplicationTile = (props) => {
               background: colorSet["rejected"],
               color: "#ffffff",
             }}
-            onClick={() => updateStatus("rejected")}
+            onClick={() => updateStatus("rejected", text)}
           >
             Reject
           </Button>
@@ -592,6 +600,15 @@ const ApplicationTile = (props) => {
             {application.jobApplicant.skills.map((skill) => (
               <Chip label={skill} style={{ marginRight: "2px" }} />
             ))}
+          </Grid>
+          <Grid>
+          <TextField
+                    label="Comment"
+                    value= {text}
+                    onChange={handleChange}
+                    variant="outlined"
+                    style={{ width: 500, top: 10}}
+                  />
           </Grid>
         </Grid>
         <Grid item container direction="column" xs={3}>
